@@ -1,0 +1,25 @@
+name: Formula tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Audit formula
+        run: brew audit --strict --online Formula/alph.rb
+
+      - name: Install formula
+        run: brew install --build-from-source Formula/alph.rb
+
+      - name: Run formula tests
+        run: brew test Formula/alph.rb
