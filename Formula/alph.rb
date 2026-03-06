@@ -9,8 +9,9 @@ class Alph < Formula
   depends_on "python@3.12"
 
   def install
-    venv = virtualenv_create(libexec, "python3.12")
-    system libexec/"bin/pip", "install", "--no-cache-dir", "."
+    python3 = Formula["python@3.12"].opt_bin/"python3"
+    system python3, "-m", "venv", libexec
+    system libexec/"bin/pip", "install", "--no-cache-dir", buildpath
     bin.install_symlink libexec/"bin/alph"
     bin.install_symlink libexec/"bin/alph-mcp"
   end
