@@ -1,9 +1,9 @@
 class Alph < Formula
   desc "Alpheus Context Engine Framework CLI — git-backed context management for LLMs"
   homepage "https://github.com/AlpheusCEF/alph-cli"
-  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.5/alph_cli-0.1.5.tar.gz"
-  sha256 "364266267de11badf53d7ccfc01564ef0fd23c26e91924d483acf43284bcfff0"
-  version "0.1.5"
+  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.6/alph_cli-0.1.6.tar.gz"
+  sha256 "ca58c6c9db712a636d7679c54f4943e5301d091e8d1b2810c6fc2685fb0b67b0"
+  version "0.1.6"
   license "AGPL-3.0-or-later"
 
   depends_on "python@3.12"
