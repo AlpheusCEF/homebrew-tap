@@ -16,9 +16,11 @@ if [[ -z "$VERSION" ]]; then
 fi
 
 FORMULA="Formula/alph.rb"
-URL="https://github.com/AlpheusCEF/alph-cli/archive/refs/tags/v${VERSION}.tar.gz"
+# Point at the sdist asset attached to the release, not the auto-generated
+# GitHub source archive. Auto-generated tarballs have unstable SHA256 hashes.
+URL="https://github.com/AlpheusCEF/alph-cli/releases/download/v${VERSION}/alph_cli-${VERSION}.tar.gz"
 
-echo "fetching tarball for v${VERSION}..."
+echo "fetching release asset for v${VERSION}..."
 SHA256=$(curl -sL "$URL" | shasum -a 256 | awk '{print $1}')
 
 echo "sha256: $SHA256"
