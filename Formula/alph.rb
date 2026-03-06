@@ -9,7 +9,7 @@ class Alph < Formula
   depends_on "python@3.12"
 
   def install
-    python3 = Formula["python@3.12"].opt_bin/"python3"
+    python3 = Formula["python@3.12"].opt_bin/"python3.12"
     system python3, "-m", "venv", libexec
     system libexec/"bin/pip", "install", "--no-cache-dir", buildpath
     bin.install_symlink libexec/"bin/alph"
