@@ -12,14 +12,14 @@ class Alph < Formula
     python3 = Formula["python@3.12"].opt_bin/"python3.12"
     system python3, "-m", "venv", libexec
 
-    # Several Rust-extension wheels (cryptography, pydantic-core) ship pre-built
-    # Mach-O objects whose headers lack padding for Homebrew's absolute dylib ID
-    # rewrite. Build them from source so -headerpad_max_install_names takes effect.
+    # Several dependencies (cryptography, pydantic-core, rpds, etc.) ship pre-built
+    # Rust-extension wheels whose Mach-O headers lack padding for Homebrew's absolute
+    # dylib ID rewrite. Build all packages from source so -headerpad_max_install_names
+    # takes effect across the board. The build takes longer but installs cleanly.
     ENV.append "LDFLAGS", "-headerpad_max_install_names"
     ENV.append "CFLAGS", "-headerpad_max_install_names"
     system libexec/"bin/pip", "install", "--no-cache-dir",
-           "--no-binary", "cryptography",
-           "--no-binary", "pydantic-core",
+           "--no-binary", ":all:",
            buildpath
 
     bin.install_symlink libexec/"bin/alph"
