@@ -20,7 +20,7 @@ class Alph < Formula
     #   rpds-py       — persistent data structures (jsonschema → referencing → rpds-py)
     ENV.append "LDFLAGS", "-headerpad_max_install_names"
     ENV.append "CFLAGS", "-headerpad_max_install_names"
-    system libexec/"bin/pip", "install", "--no-cache-dir",
+    system libexec/"bin/pip", "install", "--no-cache-dir", "--ignore-installed",
            "--no-binary", "cryptography",
            "--no-binary", "pydantic-core",
            "--no-binary", "rpds-py",
