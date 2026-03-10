@@ -21,7 +21,10 @@ FORMULA="Formula/alph.rb"
 URL="https://github.com/AlpheusCEF/alph-cli/releases/download/v${VERSION}/alph_cli-${VERSION}.tar.gz"
 
 echo "fetching release asset for v${VERSION}..."
-SHA256=$(curl -sL "$URL" | shasum -a 256 | awk '{print $1}')
+TMPFILE=$(mktemp)
+curl -fsSL -o "$TMPFILE" "$URL"
+SHA256=$(shasum -a 256 "$TMPFILE" | awk '{print $1}')
+rm -f "$TMPFILE"
 
 echo "sha256: $SHA256"
 echo "updating $FORMULA..."
