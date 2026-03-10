@@ -5,26 +5,21 @@ class Alph < Formula
   sha256 "1e57f4925913d4c4d2da18cc2044e122af832591f90168045fc8818af9e91040"
   license "AGPL-3.0-or-later"
 
-  depends_on "rust" => :build # required to build cryptography from source (avoids dylib header overflow)
+  # Maturin-built Rust extensions (cryptography, pydantic-core, rpds-py,
+  # watchfiles) use @rpath-based dylib IDs. Homebrew's post-install relocation
+  # tries to rewrite those to absolute paths, which fails because the pre-built
+  # wheels lack headerpad space. preserve_rpath tells Homebrew to leave @rpath
+  # install names alone — the extensions live inside our private venv and never
+  # need absolute dylib IDs.
+  preserve_rpath
+
   depends_on "python@3.12"
 
   def install
     python3 = Formula["python@3.12"].opt_bin/"python3.12"
     system python3, "-m", "venv", libexec
 
-    # These three packages ship pre-built Rust-extension wheels whose Mach-O headers
-    # lack padding for Homebrew's absolute dylib ID rewrite. Build them from source
-    # so -headerpad_max_install_names takes effect; all other packages use wheels.
-    #   cryptography  — Authlib dependency (fastmcp → mcp → Authlib)
-    #   pydantic-core — pydantic v2 core (fastmcp → pydantic)
-    #   rpds-py       — persistent data structures (jsonschema → referencing → rpds-py)
-    ENV.append "LDFLAGS", "-headerpad_max_install_names"
-    ENV.append "CFLAGS", "-headerpad_max_install_names"
-    system libexec/"bin/pip", "install", "--no-cache-dir", "--ignore-installed",
-           "--no-binary", "cryptography",
-           "--no-binary", "pydantic-core",
-           "--no-binary", "rpds-py",
-           buildpath
+    system libexec/"bin/pip", "install", "--no-cache-dir", buildpath
 
     bin.install_symlink libexec/"bin/alph"
     bin.install_symlink libexec/"bin/alph-mcp"
