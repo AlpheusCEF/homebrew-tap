@@ -1,13 +1,12 @@
 class Alph < Formula
   desc "Alpheus Context Engine Framework CLI — git-backed context management for LLMs"
   homepage "https://github.com/AlpheusCEF/alph-cli"
-  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.7/alph_cli-0.1.7.tar.gz"
-  sha256 "7598f7e60be42960eb6db50409ceb062032f088701099856e47aaa0954c75840"
-  version "0.1.7"
+  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.8/alph_cli-0.1.8.tar.gz"
+  sha256 "c350da67353a2b7802ebbd20e9c3693a7b7fbef0bf848264c1b744f4c95c3157"
   license "AGPL-3.0-or-later"
 
+  depends_on "rust" => :build # required to build cryptography from source (avoids dylib header overflow)
   depends_on "python@3.12"
-  depends_on "rust" => :build  # required to build cryptography from source (avoids dylib header overflow)
 
   def install
     python3 = Formula["python@3.12"].opt_bin/"python3.12"

@@ -26,11 +26,10 @@ SHA256=$(curl -sL "$URL" | shasum -a 256 | awk '{print $1}')
 echo "sha256: $SHA256"
 echo "updating $FORMULA..."
 
-# Update url, sha256, and version lines in-place
+# Update url and sha256 lines in-place (version is parsed from the URL by Homebrew)
 sed -i '' \
   -e "s|url \".*\"|url \"${URL}\"|" \
   -e "s|sha256 \".*\"|sha256 \"${SHA256}\"|" \
-  -e "s|version \".*\"|version \"${VERSION}\"|" \
   "$FORMULA"
 
 echo "done. verify with: brew audit --strict Formula/alph.rb"
