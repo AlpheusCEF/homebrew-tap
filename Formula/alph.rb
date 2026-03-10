@@ -12,14 +12,14 @@ class Alph < Formula
     python3 = Formula["python@3.12"].opt_bin/"python3.12"
     system python3, "-m", "venv", libexec
 
-    # fastmcp depends on Authlib which depends on cryptography. The pre-built
-    # cryptography wheel ships a Rust extension whose Mach-O header lacks
-    # padding for Homebrew's absolute dylib ID rewrite. Build from source so
-    # -headerpad_max_install_names takes effect and the rewrite succeeds.
+    # Several Rust-extension wheels (cryptography, pydantic-core) ship pre-built
+    # Mach-O objects whose headers lack padding for Homebrew's absolute dylib ID
+    # rewrite. Build them from source so -headerpad_max_install_names takes effect.
     ENV.append "LDFLAGS", "-headerpad_max_install_names"
     ENV.append "CFLAGS", "-headerpad_max_install_names"
     system libexec/"bin/pip", "install", "--no-cache-dir",
            "--no-binary", "cryptography",
+           "--no-binary", "pydantic-core",
            buildpath
 
     bin.install_symlink libexec/"bin/alph"
