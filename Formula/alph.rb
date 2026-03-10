@@ -1,8 +1,8 @@
 class Alph < Formula
   desc "Alpheus Context Engine Framework CLI — git-backed context management for LLMs"
   homepage "https://github.com/AlpheusCEF/alph-cli"
-  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.9/alph_cli-0.1.9.tar.gz"
-  sha256 "26ef1c417b4a55ee29a1839adba93669b685e0cbdb8273b51762657edd6bc05c"
+  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.10/alph_cli-0.1.10.tar.gz"
+  sha256 "1e57f4925913d4c4d2da18cc2044e122af832591f90168045fc8818af9e91040"
   license "AGPL-3.0-or-later"
 
   depends_on "rust" => :build # required to build cryptography from source (avoids dylib header overflow)
