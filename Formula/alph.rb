@@ -36,6 +36,23 @@ class Alph < Formula
       Utils.safe_popen_read({ "_ALPH_COMPLETE" => "source_fish" }, bin/"alph")
   end
 
+  def caveats
+    <<~EOS
+      Tab completion has been installed for zsh, bash, and fish.
+
+      zsh: add the following to ~/.zshrc if not already present:
+        fpath=(#{HOMEBREW_PREFIX}/share/zsh/site-functions $fpath)
+        autoload -Uz compinit && compinit
+
+      bash: add the following to ~/.bashrc if not already present:
+        [[ -r "#{HOMEBREW_PREFIX}/etc/bash_completion.d/alph" ]] && source "#{HOMEBREW_PREFIX}/etc/bash_completion.d/alph"
+
+      fish: completions are loaded automatically — no setup needed.
+
+      Reload your shell (exec zsh / exec bash) after editing your rc file.
+    EOS
+  end
+
   test do
     assert_match "Alpheus Context Engine Framework", shell_output("#{bin}/alph --help")
   end
