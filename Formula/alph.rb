@@ -1,8 +1,8 @@
 class Alph < Formula
   desc "Alpheus Context Engine Framework CLI — git-backed context management for LLMs"
   homepage "https://github.com/AlpheusCEF/alph-cli"
-  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.32/alph_cli-0.1.32.tar.gz"
-  sha256 "19a95a4dac0577918c76c4b7fc205d6ea1f8d1e26ed8fd73f1c0b619dfc1ea4f"
+  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.33/alph_cli-0.1.33.tar.gz"
+  sha256 "46b5d2f9e306fd30a0232ea862f38d0834a7f304427f8303a159c3c0e461ad5e"
   license "AGPL-3.0-or-later"
 
   # Maturin-built Rust extensions (cryptography, pydantic-core, rpds-py,
@@ -28,8 +28,10 @@ class Alph < Formula
 
     # Generate shell completions.  Typer exposes the completion script via
     # the _ALPH_COMPLETE=source_<shell> environment variable.
+    # Typer emits a leading newline before #compdef — strip it so compinit
+    # recognises the file (compinit requires #compdef on byte 0).
     (zsh_completion/"_alph").write \
-      Utils.safe_popen_read({ "_ALPH_COMPLETE" => "source_zsh" }, bin/"alph")
+      Utils.safe_popen_read({ "_ALPH_COMPLETE" => "source_zsh" }, bin/"alph").lstrip
     (bash_completion/"alph").write \
       Utils.safe_popen_read({ "_ALPH_COMPLETE" => "source_bash" }, bin/"alph")
     (fish_completion/"alph.fish").write \
