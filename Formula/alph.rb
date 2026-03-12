@@ -2,7 +2,7 @@ class Alph < Formula
   desc "Alpheus Context Engine Framework CLI — git-backed context management for LLMs"
   homepage "https://github.com/AlpheusCEF/alph-cli"
   url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.33/alph_cli-0.1.33.tar.gz"
-  sha256 "46b5d2f9e306fd30a0232ea862f38d0834a7f304427f8303a159c3c0e461ad5e"
+  sha256 "a12df097e254b8159cd04d540b3515867304d342f6e598752fa5e93e9c185890"
   license "AGPL-3.0-or-later"
 
   # Maturin-built Rust extensions (cryptography, pydantic-core, rpds-py,
