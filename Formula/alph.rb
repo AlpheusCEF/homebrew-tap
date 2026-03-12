@@ -1,8 +1,8 @@
 class Alph < Formula
   desc "Alpheus Context Engine Framework CLI — git-backed context management for LLMs"
   homepage "https://github.com/AlpheusCEF/alph-cli"
-  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.29/alph_cli-0.1.29.tar.gz"
-  sha256 "3d2182b7c0a0e5b4ee6d2fa86e8accf1ebace84a9bac79504a1d5fb91f134d7a"
+  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.30/alph_cli-0.1.30.tar.gz"
+  sha256 "483d209f430b91feed820bb856ced64e2b4a695b6bf4ba69a6131672dfc7c2f2"
   license "AGPL-3.0-or-later"
 
   # Maturin-built Rust extensions (cryptography, pydantic-core, rpds-py,
@@ -25,6 +25,15 @@ class Alph < Formula
     bin.install_symlink libexec/"bin/alph-mcp"
 
     man1.install "man/alph.1"
+
+    # Generate shell completions.  Typer exposes the completion script via
+    # the _ALPH_COMPLETE=source_<shell> environment variable.
+    (zsh_completion/"_alph").write \
+      Utils.safe_popen_read({ "_ALPH_COMPLETE" => "source_zsh" }, bin/"alph")
+    (bash_completion/"alph").write \
+      Utils.safe_popen_read({ "_ALPH_COMPLETE" => "source_bash" }, bin/"alph")
+    (fish_completion/"alph.fish").write \
+      Utils.safe_popen_read({ "_ALPH_COMPLETE" => "source_fish" }, bin/"alph")
   end
 
   test do
