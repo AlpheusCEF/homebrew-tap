@@ -29,6 +29,39 @@ class Fin < Formula
     bin.install_symlink libexec/"bin/fin"
     bin.install_symlink libexec/"bin/fins"
     bin.install_symlink libexec/"bin/fine"
+
+    # Generate shell completions for all three entry points.
+    # Typer emits a leading newline before #compdef — strip it so compinit
+    # recognises the file (compinit requires #compdef on byte 0).
+    %w[fin fins fine].each do |cmd|
+      env_var = "_#{cmd.upcase}_COMPLETE"
+      (zsh_completion/"_#{cmd}").write \
+        Utils.safe_popen_read({ env_var => "source_zsh" }, bin/cmd).lstrip
+      (bash_completion/cmd).write \
+        Utils.safe_popen_read({ env_var => "source_bash" }, bin/cmd)
+      (fish_completion/"#{cmd}.fish").write \
+        Utils.safe_popen_read({ env_var => "source_fish" }, bin/cmd)
+    end
+  end
+
+  def caveats
+    <<~EOS
+      Tab completion has been installed for zsh, bash, and fish
+      for all three commands: fin, fins, fine.
+
+      zsh: add the following to ~/.zshrc if not already present:
+        fpath=(#{HOMEBREW_PREFIX}/share/zsh/site-functions $fpath)
+        autoload -Uz compinit && compinit
+
+      bash: add the following to ~/.bashrc:
+        for f in #{HOMEBREW_PREFIX}/etc/bash_completion.d/{fin,fins,fine}; do
+          [[ -r "$f" ]] && source "$f"
+        done
+
+      fish: completions are loaded automatically — no setup needed.
+
+      Reload your shell (exec zsh / exec bash) after editing your rc file.
+    EOS
   end
 
   test do
