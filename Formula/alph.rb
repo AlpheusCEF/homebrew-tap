@@ -1,8 +1,8 @@
 class Alph < Formula
   desc "Alpheus Context Engine Framework CLI — git-backed context management for LLMs"
   homepage "https://github.com/AlpheusCEF/alph-cli"
-  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.37/alph_cli-0.1.37.tar.gz"
-  sha256 "43247e8de9a054be460062078985eee2d7e67354ac65b00aaff6f9ee050adf38"
+  url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.38/alph_cli-0.1.38.tar.gz"
+  sha256 "faf354f93b8d6f4f6855bdf48201d40e749c25040bd62c8426f0e649c7b5e75a"
   license "AGPL-3.0-or-later"
 
   # Maturin-built Rust extensions (cryptography, pydantic-core, rpds-py,
@@ -25,6 +25,9 @@ class Alph < Formula
     bin.install_symlink libexec/"bin/alph-mcp"
 
     man1.install "man/alph.1"
+
+    # Install SKILL.md to share/alph/ — alph skill install symlinks to this.
+    (share/"alph").install "SKILL.md"
 
     # Generate shell completions.  Typer exposes the completion script via
     # the _ALPH_COMPLETE=source_<shell> environment variable.
@@ -52,6 +55,10 @@ class Alph < Formula
       fish: completions are loaded automatically — no setup needed.
 
       Reload your shell (exec zsh / exec bash) after editing your rc file.
+
+      Claude Code skill (context-architect):
+        alph skill install    # one-time setup, auto-updates on brew upgrade
+        alph skill status     # check if installed and current
     EOS
   end
 
