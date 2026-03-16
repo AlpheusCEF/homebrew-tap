@@ -10,8 +10,8 @@ class Fin < Formula
   depends_on "python@3.12"
 
   resource "alph-cli" do
-    url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.35/alph_cli-0.1.35.tar.gz"
-    sha256 "4de3b76b3d3807c03e42a9d235a6568f39de10f3fe580a439eb029ec5aa03bb0"
+    url "https://github.com/AlpheusCEF/alph-cli/releases/download/v0.1.36/alph_cli-0.1.36.tar.gz"
+    sha256 "758306736d8ccf14f54233f7c996b6639eba52ccf14bbd26c022368e8ad35002"
   end
 
   def install
